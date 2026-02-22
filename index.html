@@ -3,31 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#07070a" />
+  <meta name="theme-color" content="#87CEEB" />
   <title>دعوتنامه</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#050508;
-      --bg1:#07070a;
-      --bg2:#0c0c14;
+      --sky1:#eefaff;
+      --sky2:#d9f2ff;
+      --sky3:#bfe8ff;
 
-      --text:#f2efe9;
-      --muted:rgba(242,239,233,.78);
+      --ink:#083046;
+      --muted:rgba(8,48,70,.70);
 
-      --gold:#d8b86e;
-      --gold2:#b88b44;
-      --gold3:#f1ddaa;
+      --accent:#2a8fd6;
+      --accent2:#176caa;
 
-      --card:rgba(255,255,255,.055);
-      --stroke:rgba(255,255,255,.10);
-      --strokeGold:rgba(216,184,110,.30);
+      --card:rgba(255,255,255,.78);
+      --stroke:rgba(8,48,70,.12);
+      --shadow: 0 18px 55px rgba(10, 50, 80, .18);
 
-      --shadow: 0 28px 90px rgba(0,0,0,.60);
       --radius: 26px;
     }
 
@@ -36,62 +34,221 @@
     body{
       margin:0;
       font-family:"Vazirmatn", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
+      color:var(--ink);
       background:
-        radial-gradient(1200px 800px at 15% 10%, rgba(216,184,110,.12), transparent 60%),
-        radial-gradient(900px 700px at 90% 22%, rgba(216,184,110,.10), transparent 62%),
-        radial-gradient(800px 600px at 55% 92%, rgba(216,184,110,.06), transparent 65%),
-        linear-gradient(180deg, var(--bg0), var(--bg2));
+        radial-gradient(900px 520px at 20% 10%, rgba(42,143,214,.16), transparent 62%),
+        radial-gradient(900px 520px at 90% 20%, rgba(42,143,214,.12), transparent 64%),
+        linear-gradient(180deg, var(--sky1), var(--sky2), var(--sky3));
       overflow-x:hidden;
+      scroll-behavior:smooth;
     }
 
-    .aurora{
+    /* Cloud layers */
+    .clouds{
       position:fixed;
-      inset:-30%;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .cloud{
+      position:absolute;
+      top: 10%;
+      left: -35%;
+      width: 520px;
+      height: 180px;
+      background: rgba(255,255,255,.55);
+      border-radius: 999px;
+      filter: blur(2px);
+      box-shadow:
+        140px 35px 0 10px rgba(255,255,255,.45),
+        300px 10px 0 0 rgba(255,255,255,.40),
+        410px 50px 0 12px rgba(255,255,255,.35);
+      opacity:.9;
+      animation: float1 28s linear infinite;
+    }
+    .cloud.c2{
+      top: 30%;
+      width: 600px;
+      height: 200px;
+      background: rgba(255,255,255,.45);
+      box-shadow:
+        160px 40px 0 10px rgba(255,255,255,.40),
+        340px 8px 0 0 rgba(255,255,255,.34),
+        470px 58px 0 12px rgba(255,255,255,.28);
+      opacity:.72;
+      animation: float2 36s linear infinite;
+    }
+    .cloud.c3{
+      top: 62%;
+      width: 720px;
+      height: 220px;
+      background: rgba(255,255,255,.40);
+      box-shadow:
+        180px 40px 0 10px rgba(255,255,255,.32),
+        390px 10px 0 0 rgba(255,255,255,.28),
+        560px 64px 0 12px rgba(255,255,255,.24);
+      opacity:.58;
+      animation: float3 44s linear infinite;
+    }
+    @keyframes float1{ to { transform: translateX(190%); } }
+    @keyframes float2{ to { transform: translateX(200%); } }
+    @keyframes float3{ to { transform: translateX(210%); } }
+
+    /* HERO (full-screen cover) */
+    .hero{
+      position:relative;
+      z-index:1;
+      min-height: 100svh; /* modern mobile safe viewport */
+      display:flex;
+      align-items:stretch;
+      justify-content:stretch;
+      padding: 16px;
+    }
+
+    .heroCard{
+      width:min(980px, 100%);
+      margin: 0 auto;
+      border-radius: 30px;
+      overflow:hidden;
+      border: 1px solid rgba(8,48,70,.10);
+      box-shadow: 0 26px 80px rgba(10, 50, 80, .20);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position:relative;
+    }
+
+    .heroMedia{
+      position:absolute;
+      inset:0;
+      background:#fff;
+    }
+    .heroMedia img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.02);
+      filter: contrast(1.05) saturate(1.03) brightness(1.02);
+    }
+    .heroMedia::after{
+      content:"";
+      position:absolute;
+      inset:0;
       pointer-events:none;
       background:
-        radial-gradient(closest-side at 30% 30%, rgba(216,184,110,.12), transparent 65%),
-        radial-gradient(closest-side at 70% 40%, rgba(216,184,110,.08), transparent 68%),
-        radial-gradient(closest-side at 45% 80%, rgba(216,184,110,.06), transparent 72%);
-      filter: blur(24px);
-      opacity:.55;
-      transform: rotate(8deg);
-      animation: drift 12s ease-in-out infinite alternate;
-      mix-blend-mode: screen;
-    }
-    @keyframes drift{
-      from{transform: translate3d(-1.5%, -1.5%, 0) rotate(8deg) scale(1.02);}
-      to  {transform: translate3d( 1.5%,  1.5%, 0) rotate(6deg) scale(1.04);}
+        radial-gradient(70% 70% at 50% 35%, rgba(255,255,255,.40), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.18), transparent 35%, rgba(42,143,214,.12) 100%),
+        radial-gradient(120% 110% at 50% 55%, transparent 55%, rgba(8,48,70,.18) 92%);
+      mix-blend-mode: soft-light;
     }
 
-    .wrap{
-      width:min(1080px, calc(100% - 36px));
-      margin: 0 auto;
-      padding: 22px 0 28px;
-      min-height:100%;
+    /* Hero overlay content */
+    .heroOverlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding: 18px 18px 14px;
+      gap: 10px;
+      color: #fff;
+      text-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .chip{
+      align-self:flex-start;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.20);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight: 800;
+      letter-spacing: .2px;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .heroTitle{
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .heroQuote{
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.9;
+      font-weight: 600;
+      opacity: .95;
+      max-width: 46ch;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 12px 12px;
+      border-radius: 18px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .pull{
       display:flex;
       align-items:center;
       justify-content:center;
+      gap: 10px;
+      margin-top: 6px;
+      opacity:.92;
+      font-weight: 800;
+      letter-spacing:.2px;
+      user-select:none;
     }
 
-    .grid{
-      width:100%;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:18px;
+    .arrow{
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      animation: bob 1.35s ease-in-out infinite;
     }
-    @media (max-width: 920px){
-      .grid{grid-template-columns:1fr}
+
+    @keyframes bob{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(6px); }
+    }
+
+    /* DETAILS SECTION */
+    .section{
+      position:relative;
+      z-index:1;
+      padding: 10px 16px 34px;
+    }
+
+    .container{
+      width:min(980px, 100%);
+      margin: 0 auto;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
     }
 
     .card{
-      position:relative;
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid var(--stroke);
+      background: var(--card);
+      border: 1px solid rgba(8,48,70,.10);
       box-shadow: var(--shadow);
       overflow:hidden;
-      isolation:isolate;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position:relative;
     }
     .card::before{
       content:"";
@@ -99,137 +256,19 @@
       inset:0;
       pointer-events:none;
       background:
-        radial-gradient(560px 260px at 18% 0%, rgba(216,184,110,.18), transparent 60%),
-        radial-gradient(520px 300px at 92% 18%, rgba(216,184,110,.12), transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,.02), transparent 55%);
-      opacity:.55;
-      mix-blend-mode: screen;
-      z-index:0;
+        radial-gradient(520px 240px at 15% 0%, rgba(255,255,255,.70), transparent 60%),
+        radial-gradient(420px 260px at 90% 15%, rgba(42,143,214,.10), transparent 62%);
+      opacity:.75;
     }
 
-    .orn{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      opacity:.65;
-      z-index:1;
-    }
-    .orn svg{width:100%; height:100%}
-    .orn path{
-      stroke: rgba(216,184,110,.42);
-      stroke-width:1.2;
-      fill:none;
-    }
-
-    /* PHOTO */
-    .photo{min-height: 580px;}
-    @media (max-width: 920px){ .photo{min-height: 440px;} }
-
-    .photoFrame{
-      position:absolute;
-      inset: 18px;
-      border-radius: calc(var(--radius) - 10px);
-      overflow:hidden;
-      border: 1px solid rgba(216,184,110,.22);
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      background:#0a0a10;
-      z-index:2;
-    }
-    .photoFrame img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      transform: scale(1.02);
-      filter: contrast(1.08) saturate(1.06) brightness(.92);
-    }
-    .photoFrame::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(70% 70% at 50% 35%, rgba(255,255,255,.06), transparent 52%),
-        radial-gradient(120% 100% at 50% 50%, transparent 40%, rgba(0,0,0,.74) 88%),
-        linear-gradient(180deg, rgba(216,184,110,.10), rgba(0,0,0,.12));
-      mix-blend-mode: overlay;
-    }
-
-    .grain{
-      position:absolute;
-      inset:-60px;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
-      opacity:.22;
-      mix-blend-mode: overlay;
-      pointer-events:none;
-      transform: rotate(2deg);
-      z-index:3;
-    }
-
-    /* CONTENT */
     .content{
-      padding: 22px 22px 18px;
-      z-index:2;
       position:relative;
-    }
-
-    .subtitle{
-      margin: 6px 0 6px;
-      color: rgba(242,239,233,.84);
-      font-weight: 600;
-      font-size: 14px;
-      letter-spacing: .4px;
-    }
-
-    .title{
-      margin: 0 0 14px;
-      font-size: 32px;
-      font-weight:800;
-      letter-spacing:.2px;
-      line-height:1.5;
-      background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-      text-shadow: 0 10px 34px rgba(216,184,110,.14);
-    }
-
-    .quote{
-      margin: 14px 0 10px;
-      padding: 14px 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(216,184,110,.22);
-      background: rgba(216,184,110,.06);
-      color: rgba(242,239,233,.92);
-      font-size: 16px;
-      line-height: 2.05;
-      position:relative;
-    }
-    .quote::before{
-      content:"“";
-      position:absolute;
-      top:-14px;
-      right:12px;
-      font-size:44px;
-      color: rgba(216,184,110,.38);
-      font-weight:800;
-      line-height:1;
-    }
-
-    p{
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 2.1;
-      white-space: pre-line;
+      padding: 18px 18px 16px;
     }
 
     .meta{
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,.10);
       display:grid;
-      gap: 10px;
+      gap: 12px;
     }
 
     .row{
@@ -239,35 +278,38 @@
     }
 
     .ico{
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
+      width: 40px;
+      height: 40px;
+      border-radius: 16px;
       display:flex;
       align-items:center;
       justify-content:center;
-      border: 1px solid rgba(216,184,110,.25);
-      background: rgba(216,184,110,.06);
-      color: var(--gold);
+      border: 1px solid rgba(42,143,214,.20);
+      background: rgba(42,143,214,.10);
+      color: var(--accent2);
       flex: 0 0 auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      box-shadow: 0 10px 26px rgba(10, 50, 80, .12);
+      font-size: 18px;
     }
 
     .row b{
       display:block;
       font-size: 13px;
-      color: rgba(242,239,233,.82);
+      color: rgba(8,48,70,.70);
       margin-bottom: 3px;
       letter-spacing: .2px;
+      font-weight: 900;
     }
     .row span{
       display:block;
       font-size: 15px;
-      color: rgba(242,239,233,.94);
-      line-height: 1.85;
+      color: rgba(8,48,70,.94);
+      line-height: 1.9;
+      font-weight: 700;
     }
 
     .actions{
-      margin-top: 16px;
+      margin-top: 14px;
       display:flex;
       flex-wrap:wrap;
       gap: 10px;
@@ -275,67 +317,66 @@
 
     .btn{
       appearance:none;
-      border: 1px solid rgba(216,184,110,.34);
-      background: linear-gradient(180deg, rgba(216,184,110,.16), rgba(216,184,110,.06));
-      color: rgba(242,239,233,.96);
+      border: 1px solid rgba(42,143,214,.24);
+      background: linear-gradient(180deg, rgba(42,143,214,.18), rgba(42,143,214,.10));
+      color: rgba(8,48,70,.95);
       padding: 12px 14px;
       border-radius: 16px;
-      font-weight:800;
+      font-weight: 900;
       text-decoration:none;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap: 10px;
       cursor:pointer;
-      min-width: 170px;
+      min-width: 180px;
       transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
-      box-shadow: 0 16px 50px rgba(0,0,0,.30);
+      box-shadow: 0 14px 34px rgba(10, 50, 80, .14);
     }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(216,184,110,.52); box-shadow: 0 18px 60px rgba(0,0,0,.38); }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(42,143,214,.40); box-shadow: 0 18px 46px rgba(10, 50, 80, .18); }
     .btn:active{ transform: translateY(0); }
 
     .btn.secondary{
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      min-width: 170px;
-      font-weight:700;
+      border: 1px solid rgba(8,48,70,.12);
+      background: rgba(255,255,255,.60);
+      min-width: 180px;
+      font-weight: 900;
     }
 
-    /* Map preview */
-    .mapWrap{
-      margin-top: 14px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      padding-top: 14px;
-    }
+    /* Map */
     .mapTitle{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-bottom: 10px;
-      color: rgba(242,239,233,.82);
-      font-weight:700;
+      margin: 0 0 10px;
+      color: rgba(8,48,70,.75);
+      font-weight: 900;
       font-size: 13px;
+      position:relative;
     }
+
     .mapCard{
       border-radius: 18px;
       overflow:hidden;
-      border: 1px solid rgba(216,184,110,.20);
-      background: rgba(255,255,255,.03);
-      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      border: 1px solid rgba(42,143,214,.18);
+      background: rgba(255,255,255,.60);
+      box-shadow: 0 18px 50px rgba(10, 50, 80, .16);
     }
     .mapCard iframe{
       width:100%;
-      height: 170px;
+      height: 210px;
       border:0;
       display:block;
-      filter: saturate(1.05) contrast(1.03) brightness(.95);
+      filter: saturate(1.05) contrast(1.02) brightness(1.02);
     }
-    .mapHint{
+
+    .hint{
       margin-top: 8px;
       font-size: 12px;
-      color: rgba(242,239,233,.56);
+      color: rgba(8,48,70,.62);
       line-height: 1.8;
+      position:relative;
     }
 
     /* Toast */
@@ -344,12 +385,12 @@
       left: 50%;
       bottom: 16px;
       transform: translateX(-50%);
-      background: rgba(0,0,0,.70);
-      border: 1px solid rgba(216,184,110,.24);
-      color: rgba(242,239,233,.92);
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(42,143,214,.22);
+      color: rgba(8,48,70,.92);
       padding: 10px 12px;
       border-radius: 14px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      box-shadow: 0 18px 60px rgba(10, 50, 80, .18);
       font-size: 13px;
       opacity: 0;
       pointer-events:none;
@@ -358,171 +399,58 @@
       max-width: min(560px, calc(100% - 22px));
       text-align:center;
       line-height: 1.85;
+      font-weight: 800;
     }
     .toast.show{opacity:1}
 
-    /* Unlock overlay (robust + always dismissable) */
-    .unlock{
-      position: fixed;
-      inset: 0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      z-index: 9999;
-      background:
-        radial-gradient(900px 600px at 50% 30%, rgba(216,184,110,.10), transparent 60%),
-        rgba(0,0,0,.78);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .unlock.show{display:flex}
-
-    .unlockCard{
-      width: min(520px, 100%);
-      border-radius: 24px;
-      border: 1px solid rgba(216,184,110,.28);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 26px 90px rgba(0,0,0,.65);
-      padding: 18px 18px 16px;
-      position:relative;
-      overflow:hidden;
-    }
-    .unlockCard::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(380px 240px at 18% 0%, rgba(216,184,110,.16), transparent 60%),
-        radial-gradient(420px 260px at 92% 18%, rgba(216,184,110,.10), transparent 62%);
-      opacity:.65;
-      mix-blend-mode: screen;
-      pointer-events:none;
-    }
-
-    .unlockTitle{
-      position:relative;
-      margin: 0 0 8px;
-      font-weight: 900;
-      font-size: 18px;
-      letter-spacing: .2px;
-      background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-    .unlockText{
-      position:relative;
-      margin: 0 0 14px;
-      color: rgba(242,239,233,.85);
-      line-height: 1.95;
-      font-size: 14px;
-    }
-    .unlockBtn{
-      position:relative;
-      width:100%;
-      padding: 13px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(216,184,110,.40);
-      background: linear-gradient(180deg, rgba(216,184,110,.18), rgba(216,184,110,.08));
-      color: rgba(242,239,233,.96);
-      font-weight: 900;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.35);
-    }
-    .unlockSmall{
-      position:relative;
-      margin-top: 10px;
-      font-size: 12px;
-      color: rgba(242,239,233,.56);
-      line-height: 1.8;
-      text-align:center;
-    }
-
-    .xClose{
-      position:absolute;
-      top:10px;
-      left:10px;
-      width:38px;height:38px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(242,239,233,.9);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index: 2;
+    /* Small improvements for very small screens */
+    @media (max-width: 420px){
+      .heroTitle{font-size: 30px;}
+      .btn{min-width: 100%;}
+      .btn.secondary{min-width: 100%;}
     }
   </style>
 </head>
 
 <body>
-  <div class="aurora" aria-hidden="true"></div>
+  <div class="clouds" aria-hidden="true">
+    <div class="cloud"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+  </div>
 
-  <div class="wrap">
-    <div class="grid">
+  <!-- HERO -->
+  <header class="hero" aria-label="کاور">
+    <div class="heroCard">
+      <div class="heroMedia">
+        <img src="photo.png" alt="عکس یادگاری" />
+      </div>
 
-      <!-- PHOTO -->
-      <section class="card photo" aria-label="عکس">
-        <div class="orn" aria-hidden="true">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M6 22 V6 H22" />
-            <path d="M6 30 V6 H30" opacity=".65"/>
-            <path d="M94 22 V6 H78" />
-            <path d="M94 30 V6 H70" opacity=".65"/>
-            <path d="M6 78 V94 H22" />
-            <path d="M6 70 V94 H30" opacity=".65"/>
-            <path d="M94 78 V94 H78" />
-            <path d="M94 70 V94 H70" opacity=".65"/>
-          </svg>
+      <div class="heroOverlay">
+        <div class="chip">💍 دعوتنامه</div>
+        <h1 class="heroTitle">به سنت عشق</h1>
+        <p class="heroQuote">به سنت عشق گرد هم می آییم، آنجا که دوست داشتن تنها کلام زندگی است.</p>
+
+        <div class="pull">
+          <div class="arrow">⬇️</div>
+          <div>برای دیدن جزئیات، بکشید پایین</div>
         </div>
+      </div>
+    </div>
+  </header>
 
-        <div class="photoFrame">
-          <img src="photo.png" alt="عکس یادگاری" />
-        </div>
-        <div class="grain" aria-hidden="true"></div>
-      </section>
+  <!-- DETAILS -->
+  <main id="details" class="section" aria-label="جزئیات مراسم">
+    <div class="container">
 
-      <!-- CONTENT -->
-      <section class="card" aria-label="اطلاعات مراسم">
-        <div class="orn" aria-hidden="true">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M6 22 V6 H22" />
-            <path d="M94 22 V6 H78" />
-            <path d="M6 78 V94 H22" />
-            <path d="M94 78 V94 H78" />
-          </svg>
-        </div>
-
+      <section class="card">
         <div class="content">
-          <div class="subtitle">با افتخار و مسرت</div>
-          <div class="title">دعوتنامه</div>
-
-          <div class="quote">به سنت عشق گرد هم می آییم، آنجا که دوست داشتن تنها کلام زندگی است.</div>
-
-          <p>
-سال‌ها پیش، دست در دست هم،
-بی‌آنکه بدانیم تقدیر چه خواهد نوشت…
-
-امروز، در آستانه آغاز زندگی مشترکمان،
-با افتخار شما را دعوت می‌کنیم
-تا در مراسم پیوند آسمانی‌مان
-همراه و شاهد این لحظه باشکوه باشید.
-
-حضور گرم شما، زینت‌بخش این محفل خواهد بود.
-          </p>
-
           <div class="meta">
             <div class="row">
               <div class="ico">📅</div>
               <div>
-                <b>تاریخ مراسم</b>
-                <span>پنجم اسفند ۱۴۰۴</span>
+                <b>تاریخ و ساعت مراسم</b>
+                <span>پنجم اسفند ۱۴۰۴ — ساعت ۱۸</span>
               </div>
             </div>
 
@@ -530,7 +458,7 @@
               <div class="ico">📍</div>
               <div>
                 <b>محل برگزاری</b>
-                <span>تهران، جنت آباد مرکزی، خیابان مختاری غربی، جنب کوچه لادن، سالن عقد ابرا</span>
+                <span>تهران، جنت آباد مرکزی، خیابان مخبری، بین شاهین و ستاری، پلاک 220 ، خانه عقد ابرا</span>
               </div>
             </div>
           </div>
@@ -541,77 +469,46 @@
               🧭 مسیریابی
             </a>
 
-            <button class="btn secondary" id="musicToggle" type="button">
-              ⏸️ توقف موسیقی
-            </button>
-
             <button class="btn secondary" id="copyBtn" type="button">
               📋 کپی آدرس
             </button>
           </div>
 
-          <!-- Map preview -->
-          <div class="mapWrap">
-            <div class="mapTitle">
-              <span>پیش‌نمایش نقشه</span>
-              <a class="btn secondary" style="min-width:auto;padding:10px 12px;border-radius:14px"
-                 target="_blank" rel="noopener"
-                 href="https://maps.app.goo.gl/87LHsdneDQjQ5t6D7">باز کردن</a>
-            </div>
+          <div class="hint">برای مسیریابی دقیق، روی «مسیریابی» بزنید.</div>
+        </div>
+      </section>
 
-            <div class="mapCard">
-              <!-- No API key needed. This is a simple embed from a query -->
-              <iframe
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps?q=%D8%B3%D8%A7%D9%84%D9%86%20%D8%B9%D9%82%D8%AF%20%D8%A7%D8%A8%D8%B1%D8%A7%20%D8%AA%D9%87%D8%B1%D8%A7%D9%86&output=embed">
-              </iframe>
-            </div>
-
-            <div class="mapHint">برای مسیریابی دقیق، روی «مسیریابی» یا «باز کردن» بزنید.</div>
+      <section class="card">
+        <div class="content">
+          <div class="mapTitle">
+            <span>پیش‌نمایش نقشه</span>
+            <a class="btn secondary" style="min-width:auto;padding:10px 12px;border-radius:14px"
+               target="_blank" rel="noopener"
+               href="https://maps.app.goo.gl/87LHsdneDQjQ5t6D7">باز کردن</a>
           </div>
 
-          <div class="mapHint" style="margin-top:12px;">
-            نکته: بعضی گوشی‌ها اجازه پخش خودکار با صدا را نمی‌دهند؛ در صورت نیاز فقط یک لمس کافی است.
+          <div class="mapCard">
+            <iframe
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=%D8%AE%D8%A7%D9%86%D9%87%20%D8%B9%D9%82%D8%AF%20%D8%A7%D8%A8%D8%B1%D8%A7%20%D8%AA%D9%87%D8%B1%D8%A7%D9%86&output=embed">
+            </iframe>
           </div>
 
-          <audio id="bgm" preload="auto"
-            src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Nocturne_in_E_flat_major%2C_Op._9_no._2.mp3">
-          </audio>
+          <div class="hint">اگر نقشه دقیق نبود، از دکمه «باز کردن» استفاده کنید.</div>
         </div>
       </section>
 
     </div>
-  </div>
-
-  <!-- Unlock overlay -->
-  <div class="unlock" id="unlock" aria-hidden="true">
-    <div class="unlockCard" role="dialog" aria-modal="true" aria-label="فعال‌سازی موسیقی">
-      <button class="xClose" id="closeUnlock" type="button" aria-label="بستن">✕</button>
-      <div class="unlockTitle">برای پخش موسیقی یک‌بار لمس کنید</div>
-      <div class="unlockText">
-        برخی مرورگرها پخش خودکار را محدود می‌کنند. با لمس دکمه زیر، موسیقی فوراً پخش می‌شود.
-      </div>
-      <button class="unlockBtn" id="startMusic" type="button">▶️ پخش موسیقی</button>
-      <div class="unlockSmall">اگر صدا پخش نشد، حالت سایلنت و صدای گوشی را بررسی کنید.</div>
-    </div>
-  </div>
+  </main>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    const bgm = document.getElementById('bgm');
-    const unlock = document.getElementById('unlock');
-    const startMusic = document.getElementById('startMusic');
-    const closeUnlock = document.getElementById('closeUnlock');
-
-    const musicToggle = document.getElementById('musicToggle');
     const copyBtn = document.getElementById('copyBtn');
     const toast = document.getElementById('toast');
 
-    const ADDRESS = 'تهران، جنت آباد مرکزی، خیابان مختاری غربی، جنب کوچه لادن، سالن عقد ابرا';
-
-    let isPlaying = false;
+    const ADDRESS = 'تهران، جنت آباد مرکزی، خیابان مخبری، بین شاهین و ستاری، پلاک 220 ، خانه عقد ابرا';
 
     function showToast(text){
       toast.textContent = text;
@@ -619,78 +516,18 @@
       setTimeout(()=> toast.classList.remove('show'), 1800);
     }
 
-    function showUnlock(){
-      unlock.classList.add('show');
-      unlock.setAttribute('aria-hidden','false');
-    }
-    function hideUnlock(){
-      unlock.classList.remove('show');
-      unlock.setAttribute('aria-hidden','true');
-    }
-
-    function updateToggle(){
-      musicToggle.textContent = isPlaying ? '⏸️ توقف موسیقی' : '▶️ پخش موسیقی';
-    }
-
-    async function playSound({fromUserGesture=false} = {}){
-      try{
-        // try with sound
-        bgm.muted = false;
-        bgm.volume = 0.75;
-        await bgm.play();
-
-        isPlaying = true;
-        updateToggle();
-        if(fromUserGesture) hideUnlock();
-        return true;
-      }catch(e1){
-        // autoplay blocked → show unlock
-        isPlaying = false;
-        updateToggle();
-        if(!fromUserGesture) showUnlock();
-        return false;
-      }
-    }
-
-    // Attempt autoplay on load
-    window.addEventListener('load', async () => {
-      await playSound({fromUserGesture:false});
-    });
-
-    // Unlock button: always dismiss overlay, then try to play (user gesture)
-    startMusic.addEventListener('click', async () => {
-      hideUnlock();
-      const ok = await playSound({fromUserGesture:true});
-      if(!ok) showToast('پخش نشد؛ یک بار دیگر لمس کنید یا صدای گوشی را بررسی کنید.');
-      else showToast('موسیقی پخش شد');
-    });
-
-    // Close overlay (doesn't force play)
-    closeUnlock.addEventListener('click', () => hideUnlock());
-
-    // Toggle music
-    musicToggle.addEventListener('click', async () => {
-      if(isPlaying){
-        bgm.pause();
-        isPlaying = false;
-        updateToggle();
-        showToast('موسیقی متوقف شد');
-      }else{
-        const ok = await playSound({fromUserGesture:true});
-        if(!ok) showToast('پخش نشد؛ روی «پخش موسیقی» در پنجره بزنید.');
-        else showToast('موسیقی پخش شد');
-      }
-    });
-
-    // Copy address
     copyBtn.addEventListener('click', async () => {
       try{
         await navigator.clipboard.writeText(ADDRESS);
         showToast('آدرس کپی شد ✅');
       }catch(e){
-        // fallback: prompt
         window.prompt('آدرس را کپی کنید:', ADDRESS);
       }
+    });
+
+    // Optional: if user taps the hero "pull" area, scroll to details
+    document.querySelector('.pull').addEventListener('click', () => {
+      document.getElementById('details').scrollIntoView({behavior:'smooth'});
     });
   </script>
 </body>
