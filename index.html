@@ -3,109 +3,164 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>کارت دعوت آنلاین</title>
+  <meta name="theme-color" content="#07070a" />
+  <title>دعوتنامه</title>
 
-  <!-- فونت: اگر اینترنت باشد از گوگل لود می‌شود؛ اگر نبود، با فونت‌های سیستم نمایش می‌دهد -->
+  <!-- Persian font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#07070a;
-      --bg2:#0b0b10;
-      --gold:#d6b46a;
-      --gold2:#b9924d;
-      --text:#f3f0ea;
-      --muted:rgba(243,240,234,.78);
-      --card:rgba(255,255,255,.06);
-      --stroke:rgba(214,180,106,.28);
-      --shadow: 0 24px 80px rgba(0,0,0,.55);
-      --radius:22px;
+      --bg0:#050508;
+      --bg1:#07070a;
+      --bg2:#0d0d14;
+      --text:#f2efe9;
+      --muted:rgba(242,239,233,.78);
+
+      --gold:#d8b86e;
+      --gold2:#b88b44;
+      --gold3:#f1ddaa;
+
+      --card:rgba(255,255,255,.055);
+      --stroke:rgba(255,255,255,.10);
+      --strokeGold:rgba(216,184,110,.28);
+
+      --shadow: 0 28px 90px rgba(0,0,0,.60);
+      --radius: 26px;
     }
 
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: "Vazirmatn", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family:"Vazirmatn", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(1200px 900px at 20% 10%, rgba(214,180,106,.10), transparent 60%),
-        radial-gradient(900px 700px at 90% 20%, rgba(214,180,106,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
+        radial-gradient(1200px 800px at 15% 10%, rgba(216,184,110,.12), transparent 60%),
+        radial-gradient(900px 700px at 90% 22%, rgba(216,184,110,.10), transparent 62%),
+        radial-gradient(800px 600px at 55% 92%, rgba(216,184,110,.06), transparent 65%),
+        linear-gradient(180deg, var(--bg0), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* Subtle animated light */
+    .aurora{
+      position:fixed;
+      inset:-30%;
+      pointer-events:none;
+      background:
+        radial-gradient(closest-side at 30% 30%, rgba(216,184,110,.12), transparent 65%),
+        radial-gradient(closest-side at 70% 40%, rgba(216,184,110,.08), transparent 68%),
+        radial-gradient(closest-side at 45% 80%, rgba(216,184,110,.06), transparent 72%);
+      filter: blur(24px);
+      opacity:.55;
+      transform: rotate(8deg);
+      animation: drift 12s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+    @keyframes drift{
+      from{transform: translate3d(-1.5%, -1.5%, 0) rotate(8deg) scale(1.02);}
+      to  {transform: translate3d( 1.5%,  1.5%, 0) rotate(6deg) scale(1.04);}
     }
 
     .wrap{
-      width:min(980px, 100%);
+      width:min(1040px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 22px 0 28px;
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .grid{
+      width:100%;
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1.08fr .92fr;
       gap:18px;
     }
-
-    @media (max-width: 860px){
-      .wrap{grid-template-columns:1fr}
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr}
     }
 
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.10);
+    .card{
+      position:relative;
       border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--stroke);
       box-shadow: var(--shadow);
       overflow:hidden;
-      position:relative;
+      isolation:isolate;
     }
-
-    .panel::before{
+    .card::before{
       content:"";
       position:absolute;
       inset:0;
       pointer-events:none;
       background:
-        radial-gradient(600px 260px at 20% 0%, rgba(214,180,106,.18), transparent 60%),
-        radial-gradient(500px 260px at 90% 15%, rgba(214,180,106,.12), transparent 62%);
+        radial-gradient(560px 260px at 18% 0%, rgba(216,184,110,.18), transparent 60%),
+        radial-gradient(520px 300px at 92% 18%, rgba(216,184,110,.12), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 55%);
       opacity:.55;
       mix-blend-mode: screen;
+      z-index:0;
     }
 
-    /* بخش عکس */
+    /* Ornaments (corner lines) */
+    .orn{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.65;
+      z-index:1;
+    }
+    .orn svg{width:100%; height:100%}
+    .orn path{
+      stroke: rgba(216,184,110,.42);
+      stroke-width:1.2;
+      fill:none;
+    }
+
+    /* Photo panel */
     .photo{
-      position:relative;
-      min-height: 520px;
-      background: #0a0a0f;
-      display:flex;
-      align-items:stretch;
-      justify-content:stretch;
+      min-height: 560px;
+    }
+    @media (max-width: 900px){
+      .photo{min-height: 440px;}
     }
 
-    @media (max-width: 860px){
-      .photo{min-height: 420px;}
+    .photoFrame{
+      position:absolute;
+      inset: 18px;
+      border-radius: calc(var(--radius) - 10px);
+      overflow:hidden;
+      border: 1px solid rgba(216,184,110,.22);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      background:#0a0a10;
+      z-index:2;
     }
 
-    .photo img{
+    .photoFrame img{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
-      filter: contrast(1.06) saturate(1.03) brightness(.92);
-      transform: scale(1.01);
+      transform: scale(1.02);
+      filter: contrast(1.08) saturate(1.06) brightness(.92);
     }
 
-    /* افکت سینمایی روی عکس: ویگنت + گرین + تون طلایی بسیار ملایم */
-    .photo::after{
+    .photoFrame::after{
       content:"";
       position:absolute;
       inset:0;
-      background:
-        radial-gradient(70% 70% at 50% 35%, rgba(255,255,255,.05), transparent 52%),
-        radial-gradient(120% 100% at 50% 50%, transparent 40%, rgba(0,0,0,.72) 85%),
-        linear-gradient(180deg, rgba(214,180,106,.10), rgba(0,0,0,.10));
-      mix-blend-mode: overlay;
       pointer-events:none;
+      background:
+        radial-gradient(70% 70% at 50% 35%, rgba(255,255,255,.06), transparent 52%),
+        radial-gradient(120% 100% at 50% 50%, transparent 40%, rgba(0,0,0,.74) 88%),
+        linear-gradient(180deg, rgba(216,184,110,.10), rgba(0,0,0,.12));
+      mix-blend-mode: overlay;
     }
 
     .grain{
@@ -115,171 +170,309 @@
       opacity:.22;
       mix-blend-mode: overlay;
       pointer-events:none;
-      transform: rotate(3deg);
+      transform: rotate(2deg);
+      z-index:3;
     }
 
-    /* بخش متن */
+    /* Right panel content */
     .content{
+      padding: 22px 22px 18px;
+      z-index:2;
       position:relative;
-      padding:22px 22px 18px;
     }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid var(--stroke);
-      background: rgba(214,180,106,.06);
-      padding:10px 14px;
-      border-radius: 999px;
-      color:var(--gold);
-      font-weight:600;
-      letter-spacing:.2px;
-      margin-bottom:14px;
-    }
-
-    .badge .dot{
-      width:8px;height:8px;border-radius:999px;
-      background: var(--gold);
-      box-shadow: 0 0 0 6px rgba(214,180,106,.12);
-    }
-
-    h1{
-      margin:0 0 12px;
-      font-size: 26px;
-      line-height:1.65;
+    .title{
+      margin: 6px 0 10px;
+      font-size: 30px;
       font-weight:700;
+      letter-spacing:.2px;
+      line-height:1.6;
+      background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow: 0 8px 28px rgba(216,184,110,.12);
+    }
+
+    .subtitle{
+      margin: 0 0 14px;
+      color: rgba(242,239,233,.84);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: .4px;
+    }
+
+    .quote{
+      margin: 14px 0 10px;
+      padding: 14px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(216,184,110,.22);
+      background: rgba(216,184,110,.06);
+      color: rgba(242,239,233,.92);
+      font-size: 16px;
+      line-height: 2.05;
+      position:relative;
+    }
+    .quote::before{
+      content:"“";
+      position:absolute;
+      top:-14px;
+      right:12px;
+      font-size:44px;
+      color: rgba(216,184,110,.38);
+      font-weight:700;
+      line-height:1;
     }
 
     p{
-      margin:0 0 12px;
+      margin: 10px 0 0;
       color: var(--muted);
       font-size: 16px;
-      line-height: 2.05;
-      font-weight: 400;
+      line-height: 2.1;
       white-space: pre-line;
     }
 
     .meta{
-      margin-top: 14px;
-      border-top: 1px solid rgba(255,255,255,.10);
+      margin-top: 16px;
       padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.10);
       display:grid;
-      gap:10px;
+      gap: 10px;
     }
 
     .row{
       display:flex;
-      gap:10px;
+      gap: 10px;
       align-items:flex-start;
-      color: var(--text);
     }
 
     .ico{
-      width:34px;height:34px;border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(214,180,106,.25);
-      background: rgba(214,180,106,.06);
-      flex:0 0 auto;
-      color:var(--gold);
-      font-weight:700;
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(216,184,110,.25);
+      background: rgba(216,184,110,.06);
+      color: var(--gold);
+      flex: 0 0 auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
 
     .row b{
       display:block;
-      font-size: 14px;
-      color: rgba(243,240,234,.85);
-      margin-bottom: 2px;
+      font-size: 13px;
+      color: rgba(242,239,233,.82);
+      margin-bottom: 3px;
+      letter-spacing: .2px;
     }
-
     .row span{
       display:block;
       font-size: 15px;
-      color: rgba(243,240,234,.92);
+      color: rgba(242,239,233,.94);
       line-height: 1.85;
     }
 
     .actions{
-      margin-top: 14px;
+      margin-top: 16px;
       display:flex;
       flex-wrap:wrap;
-      gap:10px;
+      gap: 10px;
     }
 
     .btn{
       appearance:none;
-      border:1px solid rgba(214,180,106,.35);
-      background: linear-gradient(180deg, rgba(214,180,106,.18), rgba(214,180,106,.08));
-      color: var(--text);
+      border: 1px solid rgba(216,184,110,.34);
+      background: linear-gradient(180deg, rgba(216,184,110,.16), rgba(216,184,110,.06));
+      color: rgba(242,239,233,.96);
       padding: 12px 14px;
-      border-radius: 14px;
+      border-radius: 16px;
       font-weight:700;
       text-decoration:none;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
+      gap: 10px;
       cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      min-width: 160px;
+      min-width: 170px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease, box-shadow .12s ease;
+      box-shadow: 0 16px 50px rgba(0,0,0,.30);
     }
-
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(214,180,106,.55); }
-    .btn:active{ transform: translateY(0px); }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(216,184,110,.52);
+      box-shadow: 0 18px 60px rgba(0,0,0,.38);
+    }
+    .btn:active{ transform: translateY(0); }
 
     .btn.secondary{
-      border:1px solid rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
-      min-width: 160px;
+      min-width: 170px;
     }
 
     .footer{
       margin-top: 12px;
       font-size: 12px;
-      color: rgba(243,240,234,.55);
-      line-height: 1.8;
+      color: rgba(242,239,233,.55);
+      line-height: 1.9;
     }
 
+    /* Toast */
     .toast{
       position: fixed;
       left: 50%;
       bottom: 16px;
       transform: translateX(-50%);
-      background: rgba(0,0,0,.72);
-      border: 1px solid rgba(214,180,106,.28);
-      color: rgba(243,240,234,.92);
+      background: rgba(0,0,0,.70);
+      border: 1px solid rgba(216,184,110,.24);
+      color: rgba(242,239,233,.92);
       padding: 10px 12px;
-      border-radius: 12px;
-      box-shadow: 0 16px 60px rgba(0,0,0,.55);
+      border-radius: 14px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
       font-size: 13px;
       opacity: 0;
       pointer-events:none;
       transition: opacity .2s ease;
       z-index: 999;
-      max-width: min(520px, calc(100% - 22px));
+      max-width: min(560px, calc(100% - 22px));
       text-align:center;
-      line-height: 1.8;
+      line-height: 1.85;
     }
     .toast.show{opacity:1}
+
+    /* Autoplay unlock overlay */
+    .unlock{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 9999;
+      background:
+        radial-gradient(900px 600px at 50% 30%, rgba(216,184,110,.10), transparent 60%),
+        rgba(0,0,0,.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .unlock.show{display:flex}
+    .unlockCard{
+      width: min(520px, 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(216,184,110,.28);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 26px 90px rgba(0,0,0,.65);
+      padding: 18px 18px 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .unlockCard::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(380px 240px at 18% 0%, rgba(216,184,110,.16), transparent 60%),
+        radial-gradient(420px 260px at 92% 18%, rgba(216,184,110,.10), transparent 62%);
+      opacity:.65;
+      mix-blend-mode: screen;
+      pointer-events:none;
+    }
+    .unlockTitle{
+      position:relative;
+      margin: 0 0 8px;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: .2px;
+      background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .unlockText{
+      position:relative;
+      margin: 0 0 14px;
+      color: rgba(242,239,233,.85);
+      line-height: 1.95;
+      font-size: 14px;
+    }
+    .unlockBtn{
+      position:relative;
+      width:100%;
+      padding: 13px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(216,184,110,.40);
+      background: linear-gradient(180deg, rgba(216,184,110,.18), rgba(216,184,110,.08));
+      color: rgba(242,239,233,.96);
+      font-weight: 800;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+    .unlockSmall{
+      position:relative;
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(242,239,233,.56);
+      line-height: 1.8;
+      text-align:center;
+    }
   </style>
 </head>
 
 <body>
+  <div class="aurora" aria-hidden="true"></div>
+
   <div class="wrap">
-    <!-- عکس -->
-    <section class="panel photo" aria-label="عکس">
-      <!-- عکس را در همین پوشه با نام photo.png قرار دهید -->
-      <img src="photo.png" alt="عکس یادگاری" />
-      <div class="grain" aria-hidden="true"></div>
-    </section>
+    <div class="grid">
 
-    <!-- متن و اطلاعات -->
-    <section class="panel content" aria-label="اطلاعات مراسم">
-      <div class="badge"><span class="dot"></span> کارت دعوت آنلاین</div>
+      <!-- PHOTO -->
+      <section class="card photo" aria-label="عکس">
+        <div class="orn" aria-hidden="true">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- top-left -->
+            <path d="M6 22 V6 H22" />
+            <path d="M6 30 V6 H30" opacity=".65"/>
+            <!-- top-right -->
+            <path d="M94 22 V6 H78" />
+            <path d="M94 30 V6 H70" opacity=".65"/>
+            <!-- bottom-left -->
+            <path d="M6 78 V94 H22" />
+            <path d="M6 70 V94 H30" opacity=".65"/>
+            <!-- bottom-right -->
+            <path d="M94 78 V94 H78" />
+            <path d="M94 70 V94 H70" opacity=".65"/>
+          </svg>
+        </div>
 
-      <h1>دعوتنامه</h1>
+        <div class="photoFrame">
+          <img src="photo.png" alt="عکس یادگاری" />
+        </div>
+        <div class="grain" aria-hidden="true"></div>
+      </section>
 
-      <p>
+      <!-- CONTENT -->
+      <section class="card" aria-label="اطلاعات مراسم">
+        <div class="orn" aria-hidden="true">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M6 22 V6 H22" />
+            <path d="M94 22 V6 H78" />
+            <path d="M6 78 V94 H22" />
+            <path d="M94 78 V94 H78" />
+          </svg>
+        </div>
+
+        <div class="content">
+          <div class="subtitle">با افتخار و مسرت</div>
+          <div class="title">دعوتنامه</div>
+
+          <div class="quote">به سنت عشق گرد هم می آییم، آنجا که دوست داشتن تنها کلام زندگی است.</div>
+
+          <p>
 سال‌ها پیش، دست در دست هم،
 بی‌آنکه بدانیم تقدیر چه خواهد نوشت…
 
@@ -289,62 +482,78 @@
 همراه و شاهد این لحظه باشکوه باشید.
 
 حضور گرم شما، زینت‌بخش این محفل خواهد بود.
-      </p>
+          </p>
 
-      <div class="meta">
-        <div class="row">
-          <div class="ico">📅</div>
-          <div>
-            <b>تاریخ مراسم</b>
-            <span>پنجم اسفند ۱۴۰۴</span>
+          <div class="meta">
+            <div class="row">
+              <div class="ico">📅</div>
+              <div>
+                <b>تاریخ مراسم</b>
+                <span>پنجم اسفند ۱۴۰۴</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ico">📍</div>
+              <div>
+                <b>محل برگزاری</b>
+                <span>تهران، جنت آباد مرکزی، خیابان مختاری غربی، جنب کوچه لادن، سالن عقد ابرا</span>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="row">
-          <div class="ico">📍</div>
-          <div>
-            <b>محل برگزاری</b>
-            <span>
-              تهران، جنت آباد مرکزی، خیابان مختاری غربی، جنب کوچه لادن، سالن عقد ابرا
-            </span>
+          <div class="actions">
+            <a class="btn" target="_blank" rel="noopener"
+               href="https://maps.app.goo.gl/87LHsdneDQjQ5t6D7">
+              🧭 مسیریابی
+            </a>
+
+            <button class="btn secondary" id="musicBtn" type="button">
+              ⏸️ توقف موسیقی
+            </button>
+
+            <button class="btn secondary" id="copyBtn" type="button">
+              📋 کپی آدرس
+            </button>
           </div>
+
+          <div class="footer">
+            نکته: بعضی مرورگرها اجازه پخش خودکار با صدا را نمی‌دهند؛ اگر صدا پخش نشد، یک لمس کوچک کافی است.
+          </div>
+
+          <!-- Background music (public domain / Wikimedia). -->
+          <audio id="bgm" preload="auto"
+            src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Nocturne_in_E_flat_major%2C_Op._9_no._2.mp3">
+          </audio>
         </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Unlock overlay for browsers that block autoplay -->
+  <div class="unlock" id="unlock">
+    <div class="unlockCard">
+      <div class="unlockTitle">برای پخش موسیقی یک‌بار لمس کنید</div>
+      <div class="unlockText">
+        برخی گوشی‌ها برای جلوگیری از پخش ناخواسته، پخش خودکار را محدود می‌کنند.
+        با لمس دکمه زیر، موسیقی فوراً پخش می‌شود.
       </div>
-
-      <div class="actions">
-        <!-- لینک مسیریابی: اگر لوکیشن دقیق‌تری داشتید، می‌تونیم لینک را به پین مستقیم تبدیل کنیم -->
-        <a class="btn" target="_blank" rel="noopener"
-           href="https://www.google.com/maps/search/?api=1&query=%D8%B3%D8%A7%D9%84%D9%86%20%D8%B9%D9%82%D8%AF%20%D8%A7%D8%A8%D8%B1%D8%A7%20%D8%AA%D9%87%D8%B1%D8%A7%D9%86%20%D8%AC%D9%86%D8%AA%20%D8%A2%D8%A8%D8%A7%D8%AF%20%D9%85%D8%B1%DA%A9%D8%B2%DB%8C%20%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86%20%D9%85%D8%AE%D8%AA%D8%A7%D8%B1%DB%8C%20%D8%BA%D8%B1%D8%A8%DB%8C">
-          🧭 مسیریابی
-        </a>
-
-        <button class="btn secondary" id="musicBtn" type="button">
-          ▶️ پخش موسیقی
-        </button>
-
-        <button class="btn secondary" id="copyBtn" type="button">
-          📋 کپی آدرس
-        </button>
-      </div>
-
-      <div class="footer">
-        نکته: برای پخش موسیقی در موبایل، لازم است یک‌بار دکمه «پخش موسیقی» لمس شود.
-      </div>
-
-      <!-- موزیک عمومی (ویکی‌مدیا) -->
-      <audio id="bgm" preload="none"
-        src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Nocturne_in_E_flat_major%2C_Op._9_no._2.mp3">
-      </audio>
-    </section>
+      <button class="unlockBtn" id="unlockBtn" type="button">▶️ پخش موسیقی</button>
+      <div class="unlockSmall">اگر در حالت سایلنت هستید، صدای گوشی را هم بررسی کنید.</div>
+    </div>
   </div>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    const musicBtn = document.getElementById('musicBtn');
     const bgm = document.getElementById('bgm');
+    const musicBtn = document.getElementById('musicBtn');
     const copyBtn = document.getElementById('copyBtn');
     const toast = document.getElementById('toast');
+
+    const unlock = document.getElementById('unlock');
+    const unlockBtn = document.getElementById('unlockBtn');
 
     let isPlaying = false;
 
@@ -354,21 +563,66 @@
       setTimeout(()=> toast.classList.remove('show'), 1800);
     }
 
+    async function tryAutoplay(){
+      // Best-effort autoplay:
+      // 1) try with sound
+      // 2) if blocked, try muted autoplay then show unlock overlay to unmute
+      try{
+        bgm.muted = false;
+        await bgm.play();
+        isPlaying = true;
+        musicBtn.textContent = '⏸️ توقف موسیقی';
+      }catch(e1){
+        try{
+          bgm.muted = true;
+          await bgm.play();        // many browsers allow muted autoplay
+          isPlaying = true;
+          musicBtn.textContent = '⏸️ توقف موسیقی';
+          // show overlay to unmute with user gesture
+          unlock.classList.add('show');
+        }catch(e2){
+          // totally blocked
+          unlock.classList.add('show');
+        }
+      }
+    }
+
+    // Run autoplay attempt on load
+    window.addEventListener('load', () => {
+      tryAutoplay();
+    });
+
+    async function playWithSound(){
+      try{
+        bgm.muted = false;
+        await bgm.play();
+        isPlaying = true;
+        musicBtn.textContent = '⏸️ توقف موسیقی';
+        unlock.classList.remove('show');
+        showToast('موسیقی پخش شد');
+      }catch(e){
+        showToast('اگر صدا پخش نشد، حالت سایلنت/اجازه پخش را بررسی کنید.');
+      }
+    }
+
+    unlockBtn.addEventListener('click', playWithSound);
+    unlock.addEventListener('click', (e) => {
+      // allow click outside card to still start
+      if(e.target === unlock) playWithSound();
+    });
+
     musicBtn.addEventListener('click', async () => {
       try{
         if(!isPlaying){
-          await bgm.play();
-          isPlaying = true;
-          musicBtn.textContent = '⏸️ توقف موسیقی';
-          showToast('موسیقی پخش شد');
-        } else {
+          await playWithSound();
+        }else{
           bgm.pause();
           isPlaying = false;
           musicBtn.textContent = '▶️ پخش موسیقی';
           showToast('موسیقی متوقف شد');
         }
       }catch(e){
-        showToast('اگر صدا پخش نشد، حالت سایلنت/اجازه پخش را بررسی کنید.');
+        showToast('مشکلی در پخش صدا رخ داد.');
       }
     });
 
