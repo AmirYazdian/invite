@@ -1,573 +1,224 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#87CEEB" />
-  <title>کارت دعوت</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>کارت دعوت</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800;900&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --sky1:#eefaff;
-      --sky2:#d9f2ff;
-      --sky3:#bfe8ff;
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Vazirmatn",sans-serif;
+  background:linear-gradient(180deg,#eefaff,#cfeeff);
+  overflow-x:hidden;
+}
 
-      --ink:#083046;
-      --muted:rgba(8,48,70,.70);
+/* HERO */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
 
-      --accent:#2a8fd6;
-      --accent2:#176caa;
+.heroCard{
+  position:relative;
+  width:100%;
+  max-width:900px;
+  height:90vh;
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 30px 90px rgba(0,0,0,.25);
+}
 
-      --card:rgba(255,255,255,.78);
-      --stroke:rgba(8,48,70,.12);
-      --shadow: 0 18px 55px rgba(10, 50, 80, .18);
+/* blurred background */
+.heroBg{
+  position:absolute;
+  inset:0;
+  background:url("photo.png") center/cover no-repeat;
+  filter:blur(25px) brightness(1.1);
+  transform:scale(1.2);
+  opacity:.45;
+}
 
-      --radius: 26px;
-    }
+/* main image */
+.heroImage{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+.heroImage img{
+  width:100%;
+  height:100%;
+  object-fit:contain;   /* مهم برای اینکه هر دو نفر کامل دیده بشن */
+  object-position:center;
+}
 
-    body{
-      margin:0;
-      font-family:"Vazirmatn", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(900px 520px at 20% 10%, rgba(42,143,214,.16), transparent 62%),
-        radial-gradient(900px 520px at 90% 20%, rgba(42,143,214,.12), transparent 64%),
-        linear-gradient(180deg, var(--sky1), var(--sky2), var(--sky3));
-      overflow-x:hidden;
-      scroll-behavior:smooth;
-    }
+/* Romantic Large Bubble */
+.ribbon{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:750px;
+  text-align:center;
+}
 
-    /* Cloud layers */
-    .clouds{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-      z-index:0;
-    }
-    .cloud{
-      position:absolute;
-      top: 10%;
-      left: -35%;
-      width: 520px;
-      height: 180px;
-      background: rgba(255,255,255,.55);
-      border-radius: 999px;
-      filter: blur(2px);
-      box-shadow:
-        140px 35px 0 10px rgba(255,255,255,.45),
-        300px 10px 0 0 rgba(255,255,255,.40),
-        410px 50px 0 12px rgba(255,255,255,.35);
-      opacity:.9;
-      animation: float1 28s linear infinite;
-    }
-    .cloud.c2{
-      top: 30%;
-      width: 600px;
-      height: 200px;
-      background: rgba(255,255,255,.45);
-      box-shadow:
-        160px 40px 0 10px rgba(255,255,255,.40),
-        340px 8px 0 0 rgba(255,255,255,.34),
-        470px 58px 0 12px rgba(255,255,255,.28);
-      opacity:.72;
-      animation: float2 36s linear infinite;
-    }
-    .cloud.c3{
-      top: 62%;
-      width: 720px;
-      height: 220px;
-      background: rgba(255,255,255,.40);
-      box-shadow:
-        180px 40px 0 10px rgba(255,255,255,.32),
-        390px 10px 0 0 rgba(255,255,255,.28),
-        560px 64px 0 12px rgba(255,255,255,.24);
-      opacity:.58;
-      animation: float3 44s linear infinite;
-    }
-    @keyframes float1{ to { transform: translateX(190%); } }
-    @keyframes float2{ to { transform: translateX(200%); } }
-    @keyframes float3{ to { transform: translateX(210%); } }
+.ribbon svg{
+  width:100%;
+  height:auto;
+  filter:drop-shadow(0 20px 50px rgba(0,0,0,.25));
+}
 
-    /* HERO */
-    .hero{
-      position:relative;
-      z-index:1;
-      min-height: 100svh;
-      display:flex;
-      align-items:stretch;
-      justify-content:stretch;
-      padding: 16px;
-    }
+.ribbonText{
+  font-size:34px;        /* بزرگ‌تر */
+  font-weight:900;
+  fill:#ffffff;
+}
 
-    .heroCard{
-      width:min(980px, 100%);
-      margin: 0 auto;
-      border-radius: 30px;
-      overflow:hidden;
-      border: 1px solid rgba(8,48,70,.10);
-      box-shadow: 0 26px 80px rgba(10, 50, 80, .20);
-      background: rgba(255,255,255,.55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      position:relative;
-    }
+.pull{
+  position:absolute;
+  bottom:10px;
+  width:100%;
+  text-align:center;
+  font-weight:700;
+  color:white;
+  font-size:14px;
+}
 
-    /* Blurred background layer (prevents ugly empty areas when contain is used) */
-    .heroBg{
-      position:absolute;
-      inset:0;
-      background-image: url("photo.png");
-      background-size: cover;
-      background-position: center;
-      transform: scale(1.15);
-      filter: blur(18px) saturate(1.05) brightness(1.05);
-      opacity: .40;
-    }
-    .heroBg::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(42,143,214,.18));
-      opacity:.65;
-    }
+.arrow{
+  margin-top:6px;
+  animation:bounce 1.5s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(6px)}
+}
 
-    .heroMedia{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 8px;
-    }
+/* DETAILS */
+.section{
+  padding:40px 20px;
+  background:white;
+  border-top-left-radius:40px;
+  border-top-right-radius:40px;
+  margin-top:-30px;
+}
 
-    .heroMedia img{
-      width:100%;
-      height:100%;
-      display:block;
-      /* Desktop: cover looks good */
-      object-fit: cover;
-      object-position: 50% 38%;
-      border-radius: 22px;
-      filter: contrast(1.05) saturate(1.03) brightness(1.02);
-      transform: scale(1.01);
-    }
+.card{
+  max-width:800px;
+  margin:auto;
+  background:#f5fbff;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,.08);
+}
 
-    /* Mobile fix: show both people => contain + center */
-    @media (max-width: 520px){
-      .heroMedia{ padding: 12px; }
-      .heroMedia img{
-        object-fit: contain;
-        object-position: center;
-        transform: none;
-        background: rgba(255,255,255,.12);
-      }
-    }
+.row{
+  margin-bottom:18px;
+  font-size:17px;
+  line-height:1.9;
+}
 
-    .heroOverlay{
-      position:absolute;
-      inset:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      padding: 18px 18px 14px;
-      gap: 10px;
-      color: #fff;
-      text-shadow: 0 10px 30px rgba(0,0,0,.25);
-      pointer-events:none; /* overlay should not block scrolling/taps */
-    }
+.btn{
+  display:inline-block;
+  margin:10px 5px 0 5px;
+  padding:12px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:700;
+  background:#2a8fd6;
+  color:white;
+}
 
-    /* Romantic scalloped ribbon using SVG (no clipping of text) */
-    .ribbon{
-      width: min(620px, 100%);
-      margin-inline-start: auto;
-      pointer-events:none;
-    }
-    .ribbonSvg{
-      width:100%;
-      height:auto;
-      display:block;
-      filter: drop-shadow(0 18px 55px rgba(0,0,0,.18));
-    }
-    .ribbonText{
-      font-family:"Vazirmatn", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-weight: 800;
-      font-size: 22px; /* scales with viewBox via SVG */
-      fill: rgba(255,255,255,.98);
-    }
-    .ribbonGlow{
-      fill: rgba(255,255,255,.18);
-      stroke: rgba(255,255,255,.26);
-      stroke-width: 1.2;
-    }
+.map{
+  margin-top:20px;
+  border-radius:20px;
+  overflow:hidden;
+}
 
-    .pull{
-      pointer-events:auto; /* allow tapping */
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      margin-top: 6px;
-      opacity:.95;
-      font-weight: 900;
-      letter-spacing:.2px;
-      user-select:none;
-      font-size: 14px;
-    }
-    .arrow{
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.18);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      animation: bob 1.35s ease-in-out infinite;
-    }
-    @keyframes bob{
-      0%,100%{ transform: translateY(0); }
-      50%{ transform: translateY(6px); }
-    }
-
-    /* DETAILS */
-    .section{
-      position:relative;
-      z-index:1;
-      padding: 10px 16px 34px;
-    }
-    .container{
-      width:min(980px, 100%);
-      margin: 0 auto;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-
-    .card{
-      border-radius: var(--radius);
-      background: var(--card);
-      border: 1px solid rgba(8,48,70,.10);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      position:relative;
-    }
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(520px 240px at 15% 0%, rgba(255,255,255,.70), transparent 60%),
-        radial-gradient(420px 260px at 90% 15%, rgba(42,143,214,.10), transparent 62%);
-      opacity:.75;
-    }
-
-    .content{
-      position:relative;
-      padding: 18px 18px 16px;
-    }
-
-    .meta{
-      display:grid;
-      gap: 12px;
-    }
-
-    .row{
-      display:flex;
-      gap: 10px;
-      align-items:flex-start;
-    }
-
-    .ico{
-      width: 40px;
-      height: 40px;
-      border-radius: 16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border: 1px solid rgba(42,143,214,.20);
-      background: rgba(42,143,214,.10);
-      color: var(--accent2);
-      flex: 0 0 auto;
-      box-shadow: 0 10px 26px rgba(10, 50, 80, .12);
-      font-size: 18px;
-    }
-
-    .row b{
-      display:block;
-      font-size: 13px;
-      color: rgba(8,48,70,.70);
-      margin-bottom: 3px;
-      letter-spacing: .2px;
-      font-weight: 900;
-    }
-    .row span{
-      display:block;
-      font-size: 15px;
-      color: rgba(8,48,70,.94);
-      line-height: 1.9;
-      font-weight: 700;
-    }
-
-    .actions{
-      margin-top: 14px;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-    }
-
-    .btn{
-      appearance:none;
-      border: 1px solid rgba(42,143,214,.24);
-      background: linear-gradient(180deg, rgba(42,143,214,.18), rgba(42,143,214,.10));
-      color: rgba(8,48,70,.95);
-      padding: 12px 14px;
-      border-radius: 16px;
-      font-weight: 900;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      cursor:pointer;
-      min-width: 180px;
-      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
-      box-shadow: 0 14px 34px rgba(10, 50, 80, .14);
-    }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(42,143,214,.40); box-shadow: 0 18px 46px rgba(10, 50, 80, .18); }
-    .btn:active{ transform: translateY(0); }
-
-    .btn.secondary{
-      border: 1px solid rgba(8,48,70,.12);
-      background: rgba(255,255,255,.60);
-      min-width: 180px;
-      font-weight: 900;
-    }
-
-    /* Map */
-    .mapTitle{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin: 0 0 10px;
-      color: rgba(8,48,70,.75);
-      font-weight: 900;
-      font-size: 13px;
-      position:relative;
-    }
-    .mapCard{
-      border-radius: 18px;
-      overflow:hidden;
-      border: 1px solid rgba(42,143,214,.18);
-      background: rgba(255,255,255,.60);
-      box-shadow: 0 18px 50px rgba(10, 50, 80, .16);
-    }
-    .mapCard iframe{
-      width:100%;
-      height: 210px;
-      border:0;
-      display:block;
-      filter: saturate(1.05) contrast(1.02) brightness(1.02);
-    }
-
-    .hint{
-      margin-top: 8px;
-      font-size: 12px;
-      color: rgba(8,48,70,.62);
-      line-height: 1.8;
-      font-weight: 700;
-    }
-
-    /* Toast */
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 16px;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,.90);
-      border: 1px solid rgba(42,143,214,.22);
-      color: rgba(8,48,70,.92);
-      padding: 10px 12px;
-      border-radius: 14px;
-      box-shadow: 0 18px 60px rgba(10, 50, 80, .18);
-      font-size: 13px;
-      opacity: 0;
-      pointer-events:none;
-      transition: opacity .2s ease;
-      z-index: 999;
-      max-width: min(560px, calc(100% - 22px));
-      text-align:center;
-      line-height: 1.85;
-      font-weight: 800;
-    }
-    .toast.show{opacity:1}
-
-    @media (max-width: 420px){
-      .btn{min-width: 100%;}
-      .btn.secondary{min-width: 100%;}
-    }
-  </style>
+iframe{
+  width:100%;
+  height:230px;
+  border:0;
+}
+</style>
 </head>
 
 <body>
-  <div class="clouds" aria-hidden="true">
-    <div class="cloud"></div>
-    <div class="cloud c2"></div>
-    <div class="cloud c3"></div>
+
+<div class="hero">
+  <div class="heroCard">
+
+    <div class="heroBg"></div>
+
+    <div class="heroImage">
+      <img src="photo.png" alt="">
+    </div>
+
+    <!-- Romantic Large Ribbon -->
+    <div class="ribbon">
+      <svg viewBox="0 0 1000 260">
+        <path fill="rgba(255,255,255,.25)" stroke="rgba(255,255,255,.4)" stroke-width="2"
+        d="M50,90
+           Q120,20 200,90
+           T350,90
+           T500,90
+           T650,90
+           T800,90
+           Q880,20 950,90
+           L950,190
+           Q880,240 800,190
+           T650,190
+           T500,190
+           T350,190
+           T200,190
+           Q120,240 50,190 Z" />
+
+        <text x="500" y="155" text-anchor="middle" class="ribbonText">
+          به سنت عشق گرد هم می آییم، آنجا که دوست داشتن تنها کلام زندگی است.
+        </text>
+      </svg>
+    </div>
+
+    <div class="pull">
+      برای دیدن جزئیات اسکرول کنید
+      <div class="arrow">⬇️</div>
+    </div>
+
   </div>
+</div>
 
-  <!-- HERO -->
-  <header class="hero" aria-label="کاور">
-    <div class="heroCard">
-      <div class="heroBg" aria-hidden="true"></div>
+<div class="section">
+  <div class="card">
 
-      <div class="heroMedia">
-        <img src="photo.png" alt="عکس یادگاری" />
-      </div>
-
-      <div class="heroOverlay">
-        <div class="ribbon" aria-hidden="true">
-          <!-- SVG ribbon so text never gets clipped -->
-          <svg class="ribbonSvg" viewBox="0 0 820 190" preserveAspectRatio="none">
-            <!-- scalloped ribbon shape -->
-            <path class="ribbonGlow" d="
-              M40,56
-              C80,20 120,92 160,56
-              C200,20 240,92 280,56
-              C320,20 360,92 400,56
-              C440,20 480,92 520,56
-              C560,20 600,92 640,56
-              C680,20 720,92 760,56
-              C790,34 804,40 820,56
-              L820,134
-              C780,170 730,102 690,134
-              C650,170 600,102 560,134
-              C520,170 470,102 430,134
-              C390,170 340,102 300,134
-              C260,170 210,102 170,134
-              C130,170 80,102 40,134
-              C20,150 10,145 0,134
-              L0,56
-              C10,42 20,42 40,56
-              Z
-            " />
-            <text x="410" y="112" text-anchor="middle" class="ribbonText">
-              به سنت عشق گرد هم می آییم، آنجا که دوست داشتن تنها کلام زندگی است.
-            </text>
-          </svg>
-        </div>
-
-        <div class="pull" id="pull">
-          <div class="arrow">⬇️</div>
-          <div>برای دیدن جزئیات، اسکرول کنید</div>
-        </div>
-      </div>
+    <div class="row">
+      📅 <b>پنجم اسفند ۱۴۰۴ — ساعت ۱۸</b>
     </div>
-  </header>
 
-  <!-- DETAILS -->
-  <main id="details" class="section" aria-label="جزئیات مراسم">
-    <div class="container">
-
-      <section class="card">
-        <div class="content">
-          <div class="meta">
-            <div class="row">
-              <div class="ico">📅</div>
-              <div>
-                <b>تاریخ و ساعت مراسم</b>
-                <span>پنجم اسفند ۱۴۰۴ — ساعت ۱۸</span>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="ico">📍</div>
-              <div>
-                <b>محل برگزاری</b>
-                <span>تهران، جنت آباد مرکزی، خیابان مخبری، بین شاهین و ستاری، پلاک 220 ، خانه عقد ابرا</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="actions">
-            <a class="btn" target="_blank" rel="noopener"
-               href="https://maps.app.goo.gl/87LHsdneDQjQ5t6D7">
-              🧭 مسیریابی
-            </a>
-
-            <button class="btn secondary" id="copyBtn" type="button">
-              📋 کپی آدرس
-            </button>
-          </div>
-
-          <div class="hint">برای مسیریابی دقیق، روی «مسیریابی» بزنید.</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="content">
-          <div class="mapTitle">
-            <span>پیش‌نمایش نقشه</span>
-            <a class="btn secondary" style="min-width:auto;padding:10px 12px;border-radius:14px"
-               target="_blank" rel="noopener"
-               href="https://maps.app.goo.gl/87LHsdneDQjQ5t6D7">باز کردن</a>
-          </div>
-
-          <div class="mapCard">
-            <iframe
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps?q=%D8%AE%D8%A7%D9%86%D9%87%20%D8%B9%D9%82%D8%AF%20%D8%A7%D8%A8%D8%B1%D8%A7%20%D8%AA%D9%87%D8%B1%D8%A7%D9%86&output=embed">
-            </iframe>
-          </div>
-
-          <div class="hint">اگر نقشه دقیق نبود، از دکمه «باز کردن» استفاده کنید.</div>
-        </div>
-      </section>
-
+    <div class="row">
+      📍 تهران، جنت آباد مرکزی، خیابان مخبری، بین شاهین و ستاری، پلاک 220 ، خانه عقد ابرا
     </div>
-  </main>
 
-  <div class="toast" id="toast"></div>
+    <a class="btn" target="_blank" href="https://maps.app.goo.gl/87LHsdneDQjQ5t6D7">مسیریابی</a>
 
-  <script>
-    const copyBtn = document.getElementById('copyBtn');
-    const toast = document.getElementById('toast');
-    const pull = document.getElementById('pull');
+    <div class="map">
+      <iframe loading="lazy"
+        src="https://www.google.com/maps?q=%D8%AE%D8%A7%D9%86%D9%87%20%D8%B9%D9%82%D8%AF%20%D8%A7%D8%A8%D8%B1%D8%A7%20%D8%AA%D9%87%D8%B1%D8%A7%D9%86&output=embed">
+      </iframe>
+    </div>
 
-    const ADDRESS = 'تهران، جنت آباد مرکزی، خیابان مخبری، بین شاهین و ستاری، پلاک 220 ، خانه عقد ابرا';
+  </div>
+</div>
 
-    function showToast(text){
-      toast.textContent = text;
-      toast.classList.add('show');
-      setTimeout(()=> toast.classList.remove('show'), 1800);
-    }
-
-    copyBtn.addEventListener('click', async () => {
-      try{
-        await navigator.clipboard.writeText(ADDRESS);
-        showToast('آدرس کپی شد ✅');
-      }catch(e){
-        window.prompt('آدرس را کپی کنید:', ADDRESS);
-      }
-    });
-
-    pull.addEventListener('click', () => {
-      document.getElementById('details').scrollIntoView({behavior:'smooth'});
-    });
-  </script>
 </body>
 </html>
