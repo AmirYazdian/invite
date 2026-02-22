@@ -96,7 +96,7 @@
     @keyframes float2{ to { transform: translateX(200%); } }
     @keyframes float3{ to { transform: translateX(210%); } }
 
-    /* HERO (full-screen cover) */
+    /* HERO */
     .hero{
       position:relative;
       z-index:1;
@@ -120,32 +120,57 @@
       position:relative;
     }
 
-    .heroMedia{
+    /* Blurred background layer (prevents ugly empty areas when contain is used) */
+    .heroBg{
       position:absolute;
       inset:0;
-      background:#fff;
+      background-image: url("photo.png");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.15);
+      filter: blur(18px) saturate(1.05) brightness(1.05);
+      opacity: .40;
     }
-    .heroMedia img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      transform: scale(1.02);
-      filter: contrast(1.05) saturate(1.03) brightness(1.02);
-    }
-    .heroMedia::after{
+    .heroBg::after{
       content:"";
       position:absolute;
       inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(70% 70% at 50% 35%, rgba(255,255,255,.45), transparent 55%),
-        linear-gradient(180deg, rgba(0,0,0,.10), transparent 40%, rgba(42,143,214,.14) 100%),
-        radial-gradient(120% 110% at 50% 55%, transparent 55%, rgba(8,48,70,.14) 92%);
-      mix-blend-mode: soft-light;
+      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(42,143,214,.18));
+      opacity:.65;
     }
 
-    /* Hero overlay content (only quote + pull) */
+    .heroMedia{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 8px;
+    }
+
+    .heroMedia img{
+      width:100%;
+      height:100%;
+      display:block;
+      /* Desktop: cover looks good */
+      object-fit: cover;
+      object-position: 50% 38%;
+      border-radius: 22px;
+      filter: contrast(1.05) saturate(1.03) brightness(1.02);
+      transform: scale(1.01);
+    }
+
+    /* Mobile fix: show both people => contain + center */
+    @media (max-width: 520px){
+      .heroMedia{ padding: 12px; }
+      .heroMedia img{
+        object-fit: contain;
+        object-position: center;
+        transform: none;
+        background: rgba(255,255,255,.12);
+      }
+    }
+
     .heroOverlay{
       position:absolute;
       inset:0;
@@ -155,94 +180,50 @@
       padding: 18px 18px 14px;
       gap: 10px;
       color: #fff;
-      text-shadow: 0 10px 30px rgba(0,0,0,.28);
+      text-shadow: 0 10px 30px rgba(0,0,0,.25);
+      pointer-events:none; /* overlay should not block scrolling/taps */
     }
 
-    /* Romantic quote bubble with scalloped edges using SVG mask */
-    .quoteWrap{
-      width: min(560px, 100%);
-      margin-inline-start: auto; /* align right in RTL */
-    }
-
-    .quoteBubble{
-      position:relative;
-      padding: 18px 16px 16px;
-      color: rgba(255,255,255,.96);
-      font-size: 16px;
-      line-height: 2.0;
-      font-weight: 700;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.22);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 18px 55px rgba(0,0,0,.22);
-      border-radius: 22px;
-      overflow:hidden;
-
-      /* Scalloped top+bottom via mask */
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 300'%3E%3Cpath d='M0,50 C50,20 100,80 150,50 C200,20 250,80 300,50 C350,20 400,80 450,50 C500,20 550,80 600,50 C650,20 700,80 750,50 C775,35 790,40 800,50 L800,250 C750,280 700,220 650,250 C600,280 550,220 500,250 C450,280 400,220 350,250 C300,280 250,220 200,250 C150,280 100,220 50,250 C25,265 10,260 0,250 Z' fill='black'/%3E%3C/svg%3E");
-      -webkit-mask-size: 100% 100%;
-      -webkit-mask-repeat: no-repeat;
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 300'%3E%3Cpath d='M0,50 C50,20 100,80 150,50 C200,20 250,80 300,50 C350,20 400,80 450,50 C500,20 550,80 600,50 C650,20 700,80 750,50 C775,35 790,40 800,50 L800,250 C750,280 700,220 650,250 C600,280 550,220 500,250 C450,280 400,220 350,250 C300,280 250,220 200,250 C150,280 100,220 50,250 C25,265 10,260 0,250 Z' fill='black'/%3E%3C/svg%3E");
-      mask-size: 100% 100%;
-      mask-repeat: no-repeat;
-    }
-
-    .quoteBubble::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
+    /* Romantic scalloped ribbon using SVG (no clipping of text) */
+    .ribbon{
+      width: min(620px, 100%);
+      margin-inline-start: auto;
       pointer-events:none;
-      background:
-        radial-gradient(380px 220px at 20% 0%, rgba(255,255,255,.22), transparent 60%),
-        radial-gradient(300px 220px at 90% 10%, rgba(191,232,255,.20), transparent 62%);
-      opacity:.9;
-      mix-blend-mode: screen;
     }
-
-    .quoteBubble::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(60% 70% at 30% 30%, rgba(255,255,255,.16), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.06));
-      opacity:.85;
+    .ribbonSvg{
+      width:100%;
+      height:auto;
+      display:block;
+      filter: drop-shadow(0 18px 55px rgba(0,0,0,.18));
     }
-
-    .quoteText{
-      position:relative;
-      margin:0;
-      padding-right: 2px;
+    .ribbonText{
+      font-family:"Vazirmatn", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 22px; /* scales with viewBox via SVG */
+      fill: rgba(255,255,255,.98);
     }
-    .quoteMark{
-      position:absolute;
-      top:-6px;
-      right: 12px;
-      font-size: 44px;
-      font-weight: 900;
-      opacity:.35;
-      color:#ffffff;
-      line-height:1;
-      transform: rotate(2deg);
-      text-shadow:none;
+    .ribbonGlow{
+      fill: rgba(255,255,255,.18);
+      stroke: rgba(255,255,255,.26);
+      stroke-width: 1.2;
     }
 
     .pull{
+      pointer-events:auto; /* allow tapping */
       display:flex;
       align-items:center;
       justify-content:center;
       gap: 10px;
       margin-top: 6px;
-      opacity:.92;
+      opacity:.95;
       font-weight: 900;
       letter-spacing:.2px;
       user-select:none;
+      font-size: 14px;
     }
     .arrow{
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 999px;
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.18);
@@ -258,7 +239,7 @@
       50%{ transform: translateY(6px); }
     }
 
-    /* DETAILS SECTION */
+    /* DETAILS */
     .section{
       position:relative;
       z-index:1;
@@ -407,7 +388,6 @@
       font-size: 12px;
       color: rgba(8,48,70,.62);
       line-height: 1.8;
-      position:relative;
       font-weight: 700;
     }
 
@@ -438,7 +418,6 @@
     @media (max-width: 420px){
       .btn{min-width: 100%;}
       .btn.secondary{min-width: 100%;}
-      .quoteBubble{font-size:15px;}
     }
   </style>
 </head>
@@ -453,16 +432,42 @@
   <!-- HERO -->
   <header class="hero" aria-label="کاور">
     <div class="heroCard">
+      <div class="heroBg" aria-hidden="true"></div>
+
       <div class="heroMedia">
         <img src="photo.png" alt="عکس یادگاری" />
       </div>
 
       <div class="heroOverlay">
-        <div class="quoteWrap">
-          <div class="quoteBubble">
-            <div class="quoteMark">“</div>
-            <p class="quoteText">به سنت عشق گرد هم می آییم، آنجا که دوست داشتن تنها کلام زندگی است.</p>
-          </div>
+        <div class="ribbon" aria-hidden="true">
+          <!-- SVG ribbon so text never gets clipped -->
+          <svg class="ribbonSvg" viewBox="0 0 820 190" preserveAspectRatio="none">
+            <!-- scalloped ribbon shape -->
+            <path class="ribbonGlow" d="
+              M40,56
+              C80,20 120,92 160,56
+              C200,20 240,92 280,56
+              C320,20 360,92 400,56
+              C440,20 480,92 520,56
+              C560,20 600,92 640,56
+              C680,20 720,92 760,56
+              C790,34 804,40 820,56
+              L820,134
+              C780,170 730,102 690,134
+              C650,170 600,102 560,134
+              C520,170 470,102 430,134
+              C390,170 340,102 300,134
+              C260,170 210,102 170,134
+              C130,170 80,102 40,134
+              C20,150 10,145 0,134
+              L0,56
+              C10,42 20,42 40,56
+              Z
+            " />
+            <text x="410" y="112" text-anchor="middle" class="ribbonText">
+              به سنت عشق گرد هم می آییم، آنجا که دوست داشتن تنها کلام زندگی است.
+            </text>
+          </svg>
         </div>
 
         <div class="pull" id="pull">
