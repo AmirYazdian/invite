@@ -6,16 +6,16 @@
   <meta name="theme-color" content="#07070a" />
   <title>دعوتنامه</title>
 
-  <!-- Persian font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --bg0:#050508;
       --bg1:#07070a;
-      --bg2:#0d0d14;
+      --bg2:#0c0c14;
+
       --text:#f2efe9;
       --muted:rgba(242,239,233,.78);
 
@@ -25,7 +25,7 @@
 
       --card:rgba(255,255,255,.055);
       --stroke:rgba(255,255,255,.10);
-      --strokeGold:rgba(216,184,110,.28);
+      --strokeGold:rgba(216,184,110,.30);
 
       --shadow: 0 28px 90px rgba(0,0,0,.60);
       --radius: 26px;
@@ -45,7 +45,6 @@
       overflow-x:hidden;
     }
 
-    /* Subtle animated light */
     .aurora{
       position:fixed;
       inset:-30%;
@@ -66,7 +65,7 @@
     }
 
     .wrap{
-      width:min(1040px, calc(100% - 36px));
+      width:min(1080px, calc(100% - 36px));
       margin: 0 auto;
       padding: 22px 0 28px;
       min-height:100%;
@@ -78,10 +77,10 @@
     .grid{
       width:100%;
       display:grid;
-      grid-template-columns: 1.08fr .92fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:18px;
     }
-    @media (max-width: 900px){
+    @media (max-width: 920px){
       .grid{grid-template-columns:1fr}
     }
 
@@ -108,7 +107,6 @@
       z-index:0;
     }
 
-    /* Ornaments (corner lines) */
     .orn{
       position:absolute;
       inset:0;
@@ -123,13 +121,9 @@
       fill:none;
     }
 
-    /* Photo panel */
-    .photo{
-      min-height: 560px;
-    }
-    @media (max-width: 900px){
-      .photo{min-height: 440px;}
-    }
+    /* PHOTO */
+    .photo{min-height: 580px;}
+    @media (max-width: 920px){ .photo{min-height: 440px;} }
 
     .photoFrame{
       position:absolute;
@@ -141,7 +135,6 @@
       background:#0a0a10;
       z-index:2;
     }
-
     .photoFrame img{
       width:100%;
       height:100%;
@@ -150,7 +143,6 @@
       transform: scale(1.02);
       filter: contrast(1.08) saturate(1.06) brightness(.92);
     }
-
     .photoFrame::after{
       content:"";
       position:absolute;
@@ -174,32 +166,32 @@
       z-index:3;
     }
 
-    /* Right panel content */
+    /* CONTENT */
     .content{
       padding: 22px 22px 18px;
       z-index:2;
       position:relative;
     }
 
-    .title{
-      margin: 6px 0 10px;
-      font-size: 30px;
-      font-weight:700;
-      letter-spacing:.2px;
-      line-height:1.6;
-      background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-      text-shadow: 0 8px 28px rgba(216,184,110,.12);
-    }
-
     .subtitle{
-      margin: 0 0 14px;
+      margin: 6px 0 6px;
       color: rgba(242,239,233,.84);
       font-weight: 600;
       font-size: 14px;
       letter-spacing: .4px;
+    }
+
+    .title{
+      margin: 0 0 14px;
+      font-size: 32px;
+      font-weight:800;
+      letter-spacing:.2px;
+      line-height:1.5;
+      background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow: 0 10px 34px rgba(216,184,110,.14);
     }
 
     .quote{
@@ -220,7 +212,7 @@
       right:12px;
       font-size:44px;
       color: rgba(216,184,110,.38);
-      font-weight:700;
+      font-weight:800;
       line-height:1;
     }
 
@@ -288,7 +280,7 @@
       color: rgba(242,239,233,.96);
       padding: 12px 14px;
       border-radius: 16px;
-      font-weight:700;
+      font-weight:800;
       text-decoration:none;
       display:inline-flex;
       align-items:center;
@@ -296,27 +288,54 @@
       gap: 10px;
       cursor:pointer;
       min-width: 170px;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease, box-shadow .12s ease;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
       box-shadow: 0 16px 50px rgba(0,0,0,.30);
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(216,184,110,.52);
-      box-shadow: 0 18px 60px rgba(0,0,0,.38);
-    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(216,184,110,.52); box-shadow: 0 18px 60px rgba(0,0,0,.38); }
     .btn:active{ transform: translateY(0); }
 
     .btn.secondary{
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       min-width: 170px;
+      font-weight:700;
     }
 
-    .footer{
-      margin-top: 12px;
+    /* Map preview */
+    .mapWrap{
+      margin-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding-top: 14px;
+    }
+    .mapTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+      color: rgba(242,239,233,.82);
+      font-weight:700;
+      font-size: 13px;
+    }
+    .mapCard{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(216,184,110,.20);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+    .mapCard iframe{
+      width:100%;
+      height: 170px;
+      border:0;
+      display:block;
+      filter: saturate(1.05) contrast(1.03) brightness(.95);
+    }
+    .mapHint{
+      margin-top: 8px;
       font-size: 12px;
-      color: rgba(242,239,233,.55);
-      line-height: 1.9;
+      color: rgba(242,239,233,.56);
+      line-height: 1.8;
     }
 
     /* Toast */
@@ -342,7 +361,7 @@
     }
     .toast.show{opacity:1}
 
-    /* Autoplay unlock overlay */
+    /* Unlock overlay (robust + always dismissable) */
     .unlock{
       position: fixed;
       inset: 0;
@@ -353,11 +372,12 @@
       z-index: 9999;
       background:
         radial-gradient(900px 600px at 50% 30%, rgba(216,184,110,.10), transparent 60%),
-        rgba(0,0,0,.72);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+        rgba(0,0,0,.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .unlock.show{display:flex}
+
     .unlockCard{
       width: min(520px, 100%);
       border-radius: 24px;
@@ -379,10 +399,11 @@
       mix-blend-mode: screen;
       pointer-events:none;
     }
+
     .unlockTitle{
       position:relative;
       margin: 0 0 8px;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 18px;
       letter-spacing: .2px;
       background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2));
@@ -405,7 +426,7 @@
       border: 1px solid rgba(216,184,110,.40);
       background: linear-gradient(180deg, rgba(216,184,110,.18), rgba(216,184,110,.08));
       color: rgba(242,239,233,.96);
-      font-weight: 800;
+      font-weight: 900;
       cursor:pointer;
       display:flex;
       align-items:center;
@@ -421,6 +442,22 @@
       line-height: 1.8;
       text-align:center;
     }
+
+    .xClose{
+      position:absolute;
+      top:10px;
+      left:10px;
+      width:38px;height:38px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(242,239,233,.9);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index: 2;
+    }
   </style>
 </head>
 
@@ -434,16 +471,12 @@
       <section class="card photo" aria-label="عکس">
         <div class="orn" aria-hidden="true">
           <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-            <!-- top-left -->
             <path d="M6 22 V6 H22" />
             <path d="M6 30 V6 H30" opacity=".65"/>
-            <!-- top-right -->
             <path d="M94 22 V6 H78" />
             <path d="M94 30 V6 H70" opacity=".65"/>
-            <!-- bottom-left -->
             <path d="M6 78 V94 H22" />
             <path d="M6 70 V94 H30" opacity=".65"/>
-            <!-- bottom-right -->
             <path d="M94 78 V94 H78" />
             <path d="M94 70 V94 H70" opacity=".65"/>
           </svg>
@@ -508,7 +541,7 @@
               🧭 مسیریابی
             </a>
 
-            <button class="btn secondary" id="musicBtn" type="button">
+            <button class="btn secondary" id="musicToggle" type="button">
               ⏸️ توقف موسیقی
             </button>
 
@@ -517,11 +550,31 @@
             </button>
           </div>
 
-          <div class="footer">
-            نکته: بعضی مرورگرها اجازه پخش خودکار با صدا را نمی‌دهند؛ اگر صدا پخش نشد، یک لمس کوچک کافی است.
+          <!-- Map preview -->
+          <div class="mapWrap">
+            <div class="mapTitle">
+              <span>پیش‌نمایش نقشه</span>
+              <a class="btn secondary" style="min-width:auto;padding:10px 12px;border-radius:14px"
+                 target="_blank" rel="noopener"
+                 href="https://maps.app.goo.gl/87LHsdneDQjQ5t6D7">باز کردن</a>
+            </div>
+
+            <div class="mapCard">
+              <!-- No API key needed. This is a simple embed from a query -->
+              <iframe
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=%D8%B3%D8%A7%D9%84%D9%86%20%D8%B9%D9%82%D8%AF%20%D8%A7%D8%A8%D8%B1%D8%A7%20%D8%AA%D9%87%D8%B1%D8%A7%D9%86&output=embed">
+              </iframe>
+            </div>
+
+            <div class="mapHint">برای مسیریابی دقیق، روی «مسیریابی» یا «باز کردن» بزنید.</div>
           </div>
 
-          <!-- Background music (public domain / Wikimedia). -->
+          <div class="mapHint" style="margin-top:12px;">
+            نکته: بعضی گوشی‌ها اجازه پخش خودکار با صدا را نمی‌دهند؛ در صورت نیاز فقط یک لمس کافی است.
+          </div>
+
           <audio id="bgm" preload="auto"
             src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Nocturne_in_E_flat_major%2C_Op._9_no._2.mp3">
           </audio>
@@ -531,16 +584,16 @@
     </div>
   </div>
 
-  <!-- Unlock overlay for browsers that block autoplay -->
-  <div class="unlock" id="unlock">
-    <div class="unlockCard">
+  <!-- Unlock overlay -->
+  <div class="unlock" id="unlock" aria-hidden="true">
+    <div class="unlockCard" role="dialog" aria-modal="true" aria-label="فعال‌سازی موسیقی">
+      <button class="xClose" id="closeUnlock" type="button" aria-label="بستن">✕</button>
       <div class="unlockTitle">برای پخش موسیقی یک‌بار لمس کنید</div>
       <div class="unlockText">
-        برخی گوشی‌ها برای جلوگیری از پخش ناخواسته، پخش خودکار را محدود می‌کنند.
-        با لمس دکمه زیر، موسیقی فوراً پخش می‌شود.
+        برخی مرورگرها پخش خودکار را محدود می‌کنند. با لمس دکمه زیر، موسیقی فوراً پخش می‌شود.
       </div>
-      <button class="unlockBtn" id="unlockBtn" type="button">▶️ پخش موسیقی</button>
-      <div class="unlockSmall">اگر در حالت سایلنت هستید، صدای گوشی را هم بررسی کنید.</div>
+      <button class="unlockBtn" id="startMusic" type="button">▶️ پخش موسیقی</button>
+      <div class="unlockSmall">اگر صدا پخش نشد، حالت سایلنت و صدای گوشی را بررسی کنید.</div>
     </div>
   </div>
 
@@ -548,12 +601,15 @@
 
   <script>
     const bgm = document.getElementById('bgm');
-    const musicBtn = document.getElementById('musicBtn');
+    const unlock = document.getElementById('unlock');
+    const startMusic = document.getElementById('startMusic');
+    const closeUnlock = document.getElementById('closeUnlock');
+
+    const musicToggle = document.getElementById('musicToggle');
     const copyBtn = document.getElementById('copyBtn');
     const toast = document.getElementById('toast');
 
-    const unlock = document.getElementById('unlock');
-    const unlockBtn = document.getElementById('unlockBtn');
+    const ADDRESS = 'تهران، جنت آباد مرکزی، خیابان مختاری غربی، جنب کوچه لادن، سالن عقد ابرا';
 
     let isPlaying = false;
 
@@ -563,76 +619,77 @@
       setTimeout(()=> toast.classList.remove('show'), 1800);
     }
 
-    async function tryAutoplay(){
-      // Best-effort autoplay:
-      // 1) try with sound
-      // 2) if blocked, try muted autoplay then show unlock overlay to unmute
+    function showUnlock(){
+      unlock.classList.add('show');
+      unlock.setAttribute('aria-hidden','false');
+    }
+    function hideUnlock(){
+      unlock.classList.remove('show');
+      unlock.setAttribute('aria-hidden','true');
+    }
+
+    function updateToggle(){
+      musicToggle.textContent = isPlaying ? '⏸️ توقف موسیقی' : '▶️ پخش موسیقی';
+    }
+
+    async function playSound({fromUserGesture=false} = {}){
       try{
+        // try with sound
         bgm.muted = false;
+        bgm.volume = 0.75;
         await bgm.play();
+
         isPlaying = true;
-        musicBtn.textContent = '⏸️ توقف موسیقی';
+        updateToggle();
+        if(fromUserGesture) hideUnlock();
+        return true;
       }catch(e1){
-        try{
-          bgm.muted = true;
-          await bgm.play();        // many browsers allow muted autoplay
-          isPlaying = true;
-          musicBtn.textContent = '⏸️ توقف موسیقی';
-          // show overlay to unmute with user gesture
-          unlock.classList.add('show');
-        }catch(e2){
-          // totally blocked
-          unlock.classList.add('show');
-        }
+        // autoplay blocked → show unlock
+        isPlaying = false;
+        updateToggle();
+        if(!fromUserGesture) showUnlock();
+        return false;
       }
     }
 
-    // Run autoplay attempt on load
-    window.addEventListener('load', () => {
-      tryAutoplay();
+    // Attempt autoplay on load
+    window.addEventListener('load', async () => {
+      await playSound({fromUserGesture:false});
     });
 
-    async function playWithSound(){
-      try{
-        bgm.muted = false;
-        await bgm.play();
-        isPlaying = true;
-        musicBtn.textContent = '⏸️ توقف موسیقی';
-        unlock.classList.remove('show');
-        showToast('موسیقی پخش شد');
-      }catch(e){
-        showToast('اگر صدا پخش نشد، حالت سایلنت/اجازه پخش را بررسی کنید.');
-      }
-    }
-
-    unlockBtn.addEventListener('click', playWithSound);
-    unlock.addEventListener('click', (e) => {
-      // allow click outside card to still start
-      if(e.target === unlock) playWithSound();
+    // Unlock button: always dismiss overlay, then try to play (user gesture)
+    startMusic.addEventListener('click', async () => {
+      hideUnlock();
+      const ok = await playSound({fromUserGesture:true});
+      if(!ok) showToast('پخش نشد؛ یک بار دیگر لمس کنید یا صدای گوشی را بررسی کنید.');
+      else showToast('موسیقی پخش شد');
     });
 
-    musicBtn.addEventListener('click', async () => {
-      try{
-        if(!isPlaying){
-          await playWithSound();
-        }else{
-          bgm.pause();
-          isPlaying = false;
-          musicBtn.textContent = '▶️ پخش موسیقی';
-          showToast('موسیقی متوقف شد');
-        }
-      }catch(e){
-        showToast('مشکلی در پخش صدا رخ داد.');
+    // Close overlay (doesn't force play)
+    closeUnlock.addEventListener('click', () => hideUnlock());
+
+    // Toggle music
+    musicToggle.addEventListener('click', async () => {
+      if(isPlaying){
+        bgm.pause();
+        isPlaying = false;
+        updateToggle();
+        showToast('موسیقی متوقف شد');
+      }else{
+        const ok = await playSound({fromUserGesture:true});
+        if(!ok) showToast('پخش نشد؛ روی «پخش موسیقی» در پنجره بزنید.');
+        else showToast('موسیقی پخش شد');
       }
     });
 
+    // Copy address
     copyBtn.addEventListener('click', async () => {
-      const address = 'تهران، جنت آباد مرکزی، خیابان مختاری غربی، جنب کوچه لادن، سالن عقد ابرا';
       try{
-        await navigator.clipboard.writeText(address);
+        await navigator.clipboard.writeText(ADDRESS);
         showToast('آدرس کپی شد ✅');
       }catch(e){
-        showToast('کپی خودکار ممکن نیست؛ آدرس را دستی انتخاب کنید.');
+        // fallback: prompt
+        window.prompt('آدرس را کپی کنید:', ADDRESS);
       }
     });
   </script>
