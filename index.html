@@ -216,13 +216,14 @@
       opacity: .9;
     }
 
+    /* ✅ تغییرات خواسته‌شده اینجاست: متن مشکی + بدون استروک + سنتر */
     .ribbonText{
       font-family:"Vazirmatn", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       font-weight: 900;
-      fill: rgba(255,255,255,.98);
-      paint-order: stroke;
-      stroke: rgba(0,0,0,.18);
-      stroke-width: 1.2;
+      fill: #000;           /* مشکی */
+      stroke: none;         /* حذف دورخط */
+      paint-order: normal;  /* برگشت به حالت عادی */
+      text-anchor: middle;  /* سنتر */
     }
 
     /* Scroll hint */
@@ -457,7 +458,7 @@
 
       <div class="heroOverlay">
         <div class="ribbon" aria-hidden="true">
-          <!-- ribbon + text (ONLY CHANGE: two lines) -->
+          <!-- ribbon + text -->
           <svg class="ribbonSvg" viewBox="0 0 1000 320" preserveAspectRatio="none">
             <path class="ribbonGlow" d="
               M50,96
